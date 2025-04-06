@@ -24,29 +24,37 @@ const App = () => {
   }
   function handleSubmit(e) {
     e.preventDefault()
+  setErrorName("")
+  setErrorAdd("")
+  setErrorEmail("")
+  setErrorMobile("")
     for (let i = 0; i < name.length; i++) {
       const charCode = name.charCodeAt(i)
       if (
         !(charCode >= 65 && charCode <= 90) &&
         !(charCode >= 97 && charCode <= 122)
       ) {
-        setErrorName("Name should contain only letters")
+        // setErrorName("Name should contain only letters")
+        setErrorName('1')
         return
       }
     }
     let specialChars = "!@#$%^&*()_+=[]{}|\\/:;\"'<>?~`"
     for (let i = 0; i < address.length; i++) {
       if (specialChars.includes(address[i])) {
-        setErrorAdd("Address should not contain special characters")
+        // setErrorAdd("Address should not contain special characters")
+        setErrorAdd('2')
         return
       }
     }
     if (!email.includes("@") || !email.includes(".com")) {
-      setErrorEmail("Email should contain @ and .com")
+      // setErrorEmail("Email should contain @ and .com")
+      setErrorEmail('3')
       return
     }
     if (mobile.length > 10) {
-      setErrorMobile("Mobile number should not be more than 10 characters")
+      // setErrorMobile("Mobile number should not be more than 10 characters")
+      setErrorMobile('4')
       return
     }
     setUser({
