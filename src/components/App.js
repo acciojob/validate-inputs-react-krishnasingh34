@@ -21,11 +21,6 @@ const App = () => {
     let key = e.target.name
     let value = e.target.value
     setUser({ ...user, [key]: value })
-    // Clear errors while typing
-    if (key === 'name') setErrorName('')
-    if (key === 'address') setErrorAdd('')
-    if (key === 'email') setErrorEmail('')
-    if (key === 'mobile') setErrorMobile('')
   }
   function handleSubmit(e) {
     e.preventDefault()
@@ -36,20 +31,27 @@ const App = () => {
     setErrorMobile('')
     let isValid = true
 
+    // for (let i = 0; i < name.length; i++) {
+    //   const charCode = name.charCodeAt(i)
+    //   if (
+    //     !(charCode >= 65 && charCode <= 90) &&
+    //     !(charCode >= 97 && charCode <= 122) &&
+    //     name[i] !== ' '
+    //   ) {
+    //     setErrorName("Name should contain only letters")
+    //     isValid = false
+    //   }
+    // }
+    let nameChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     for (let i = 0; i < name.length; i++) {
-      const charCode = name.charCodeAt(i)
-      if (
-        !(charCode >= 65 && charCode <= 90) &&
-        !(charCode >= 97 && charCode <= 122) &&
-        name[i] !== ' '
-      ) {
+      if (!nameChars.includes(name[i])) {
         setErrorName("Name should contain only letters")
         isValid = false
       }
     }
-    let specialChars = "!@#$%^&*()_+=[]{}|\\/:;\"'<>?~`"
+    let addressChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
     for (let i = 0; i < address.length; i++) {
-      if (specialChars.includes(address[i])) {
+      if (!addressChars.includes(address[i])) {
         setErrorAdd("Address should not contain special characters")
         isValid = false
       }
@@ -69,30 +71,26 @@ const App = () => {
         address: '',
         email: '',
         mobile: ''
-      });
+      })
     }
   }
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <label>Name</label>
-        <input type="text" name='name' value={name} 
-          onChange={updateFields} />
+        <input type="text" name='name' value={name} onChange={updateFields} />
         <p className='errorMessage' style={{ color: 'red' }}>{errorName}</p>
 
         <label>Address</label>
-        <input type="text" name='address' value={address}
-          onChange={updateFields} />
+        <input type="text" name='address' value={address} onChange={updateFields} />
         <p className='errorMessage' style={{ color: 'red' }}>{errorAdd}</p>
 
         <label>Email</label>
-        <input type="text" name='email' value={email}
-          onChange={updateFields} />
+        <input type="text" name='email' value={email} onChange={updateFields} />
         <p className='errorMessage' style={{ color: 'red' }}>{errorEmail}</p>
 
         <label>Mobile</label>
-        <input type="text" name='mobile' value={mobile}
-          onChange={updateFields} />
+        <input type="text" name='mobile' value={mobile} onChange={updateFields} />
         <p className='errorMessage' style={{ color: 'red' }}>{errorMobile}</p>
         <button>Submit</button>
       </form>
