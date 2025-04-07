@@ -21,36 +21,58 @@ const App = () => {
     let key = e.target.name
     let value = e.target.value
     setUser({ ...user, [key]: value })
+    // Clear errors while typing
+    if (key === 'name') setErrorName('')
+    if (key === 'address') setErrorAdd('')
+    if (key === 'email') setErrorEmail('')
+    if (key === 'mobile') setErrorMobile('')
   }
   function handleSubmit(e) {
     e.preventDefault()
+    // Reset all errors first
+    setErrorName('')
+    setErrorAdd('')
+    setErrorEmail('')
+    setErrorMobile('')
+    let isValid = true
+
     for (let i = 0; i < name.length; i++) {
       const charCode = name.charCodeAt(i)
       if (
         !(charCode >= 65 && charCode <= 90) &&
-        !(charCode >= 97 && charCode <= 122)
+        !(charCode >= 97 && charCode <= 122) &&
+        name[i] !== ' '
       ) {
         setErrorName("Name should contain only letters")
+        isValid = false
+        break
       }
     }
     let specialChars = "!@#$%^&*()_+=[]{}|\\/:;\"'<>?~`"
     for (let i = 0; i < address.length; i++) {
       if (specialChars.includes(address[i])) {
         setErrorAdd("Address should not contain special characters")
+        isValid = false
+        break
       }
     }
     if (!email.includes("@") || !email.includes(".com")) {
       setErrorEmail("Email should contain @ and .com")
+      isValid = false
     }
     if (mobile.length > 10) {
       setErrorMobile("Mobile number should not be more than 10 characters")
+      isValid = false
     }
-    setUser({
-      name: '',
-      address: '',
-      email: '',
-      mobile: ''
-    })
+     // Only reset form if validation passes
+    if (isValid) {
+      setUser({
+        name: '',
+        address: '',
+        email: '',
+        mobile: ''
+      });
+    }
   }
   return (
     <div>
